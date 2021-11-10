@@ -1,0 +1,272 @@
+<div class="row form-group-btn-adicionar">
+    <div class="col-lg-10">
+        <div class="tim-typo">
+            <span class="tim-note" style="font-size: 26px;font-family: Quicksand;">Atendimento</span>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="tim-typo">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div class="form" [hidden]="!exibirConsulta">
+    <div class="row borda-filtro" >
+        <div class="col-lg-12 filtro" data-toggle="collapse" data-target="#filtroPesquisa" >
+            <div class="float-right">
+                <small class="filtro-pesquisa">Filtros para Pesquisa ↓
+                </small>
+            </div>
+        </div>
+        <div class="col-lg-12 collapse" id="filtroPesquisa">
+            <div class="row ">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        Cliente
+                        <input type="text" class="form-control" [(ngModel)]="pesquisa.nomeFiltro" name="nomeFiltro" id="nomeFiltro" placeholder="Cliente">
+                        <span id="nomeProdutorFiltro-error" class="error"></span>
+                    </div>
+                </div>   
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        Data
+                        <input pTooltip="DD/MM/AAAA" type="text" maxlength="10" [(ngModel)]="pesquisa.dataFiltro" class="form-control" placeholder="DD/MM/AAAA" name="dataFiltro" id="dataFiltro" #dataFiltro>
+                        <span id="nome-error" class="error"></span>
+                    </div>
+                </div>         
+            </div>
+            <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 btn-pesquisar">
+                <div class="form-group-btn">
+                    <hr>
+                    <button type="button" (click)="btnPesquisar()"  class="btn btn-primary btn float-right">Pesquisar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="col-lg-12">
+            <div class="row">
+                <p-table class="grid1" selectionMode="single" [value]="gridVo" [columns]="colunas" [responsive]="true"
+                    emptyMessage="Não existem registros!" [paginator]="true" [rows]="10"
+                    sortMode="multiple">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="align-text-center">
+                            <th *ngFor="let col of columns" pTooltip="{{col.header}}" tooltipPosition="top"> 
+                                {{col.header}}  
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                            <th style="width: 70px;" class="table-alterar">Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-gridVo let-columns="columns">
+                        <tr class="{{(gridVo.dataDesativacao == null ? '' : 'disabled-account-row')}}">
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.id}}</td>
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.descricao}}</td>
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top"> {{gridVo.dataAtendimento}} {{gridVo.horaAtendimento}}</td>   
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.cliente}}</td>   
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.usuarioAtendimento}}</td>   
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.valorTotalDescricao}}</td>       
+                            <td class="table-acao">
+                                <ul class="navbar-nav ul-action">
+                                    <li class="nav-item dropdown">
+                                        <div class="btn-action" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-action-first fa fa-ellipsis-v"></i>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="dropdown-item" (click)="btnRemoverDados(gridVo)">
+                                                <i class="icon-action fa fa-thumbs-{{(gridVo.dataDesativacao == null ? 'down' : 'up')}}"></i>Remover</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-gridVo let-columns="columns">
+                        <tr [attr.colspan]="gridVo">
+                            <td [colSpan]="7" class="table-empty">
+                                Não existem registros!
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <div class="form-group-btn">
+                    <button type="button" (click)="btnNovoDados()" class="btn btn-primary btn float-right">Novo</button>
+                    <button type="button" (click)="btnGridCSV()" class="btn btn-primary btn btn-cancelar float-left">Gerar CSV</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+<div class="form" [hidden]="!exibirEdicao">
+    <div class="row">
+        <div class="col-xl-2">
+            <label>Data
+                <span class="ask-obrigatorio">*</span>
+            </label>
+            <input pTooltip="dataAtendimento" type="text" maxlength="10" [(ngModel)]="model.dataAtendimento" class="form-control" placeholder="DD/MM/AAAA" name="dataAtendimento" id="dataAtendimento" #dataAtendimento>
+            <span id="dataAtendimento-error" class="error"></span>
+        </div>
+        <div class="col-xl-10">
+            <label>Descricao
+                <span class="ask-obrigatorio">*</span>
+            </label>
+            <input pTooltip="Descrição" type="text" maxlength="100" [(ngModel)]="model.descricao" class="form-control" placeholder="Descricao" name="descricao" id="descricao" #descricao>
+            <span id="descricao-error" class="error"></span>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-xl-2">
+            <div class="form-group">
+                <label>Hora
+                    <span class="ask-obrigatorio">*</span>
+                </label>
+                <p-dropdown pTooltip="Hora" id="cbhora" name="cbhora" [options]="horarios" [(ngModel)]="horaSelecionada" [style]="{'width':'100%'}"
+                    placeholder="Selecione..." #cbperfil></p-dropdown>
+                <span id="cbhora-error" class="error"></span>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label>Cliente
+                    <span class="ask-obrigatorio">*</span>
+                </label>
+                <p-dropdown pTooltip="Cliente" id="cbcliente" name="cbcliente" [options]="clientes" [(ngModel)]="clienteSelecionado" [style]="{'width':'100%'}"
+                    placeholder="Selecione..." #cbperfil></p-dropdown>
+                <span id="cbcliente-error" class="error"></span>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label>Funcionário
+                    <span class="ask-obrigatorio">*</span>
+                </label>
+                <p-dropdown pTooltip="Usuario" id="cbperfil" name="cbperfil" [options]="usuarios" [(ngModel)]="usuarioSelecionado" [style]="{'width':'100%'}"
+                    placeholder="Selecione..." #cbperfil></p-dropdown>
+                <span id="cbperfil-error" class="error"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-group-btn-adicionar" style="margin-top: 55px">
+        <div class="col-lg-10">
+            <div class="tim-typo">
+                <span class="tim-note" style="font-size: 26px;font-family: Quicksand;">Produtos do Atendimento</span>
+    
+            </div>
+        </div>
+        <div class="col-lg-2" *ngIf="exibirGridItens">
+            <div class="tim-typo">
+                <button type="button" inputId="btnAdicionar" id="btnAdicionar" name="btnAdicionar" (click)="btnAdicionar()"
+                    class="btn btn-primary btn float-right">Adicionar</button>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="tim-typo">
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="form" *ngIf="exibirGridItens">
+        <div class="col-lg-12">
+            <div class="row">
+                <p-table class="grid2" selectionMode="single" [value]="itensGridVo" [columns]="colunasItens" [responsive]="true"
+                    emptyMessage="Não existem registros!" [paginator]="true" [rows]="10"
+                    sortMode="multiple">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="align-text-center">
+                            <th *ngFor="let col of columns" pTooltip="{{col.header}}" tooltipPosition="top"> 
+                                {{col.header}}  
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                            <th style="width: 70px;" class="table-alterar">Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-gridVo let-columns="columns">
+                        <tr>
+                            <td (dblclick)="btnAlterarDadosItens(gridVo)" tooltipPosition="top">{{gridVo.produto}}</td>
+                            <td class="table-acao">
+                                <ul class="navbar-nav ul-action">
+                                    <li class="nav-item dropdown">
+                                        <div class="btn-action" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-action-first fa fa-ellipsis-v"></i>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="dropdown-item" (click)="btnRemoverItem(gridVo)">
+                                                <i class="icon-action fa fa-thumbs-{{(gridVo.dataDesativacao == null ? 'down' : 'up')}}"></i>Remover</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-gridVo let-columns="columns">
+                        <tr [attr.colspan]="itensGridVo">
+                            <td [colSpan]="2" class="table-empty">
+                                Não existem registros!
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="exibirGridItens">
+        <div class="col-lg-12">
+            <hr>
+            <div class="form-group-btn">
+                <button type="button" (click)="btnSalvarDados()" class="btn btn-primary btn float-right">Salvar</button>
+                <button type="button" (click)="btnVoltarTelaPrincipal()" class="btn btn-secondary btn btn-cancelar float-right">Voltar</button>
+                <button type="button" (click)="btnGridCSVItens()" class="btn btn-primary btn btn-cancelar float-left">Gerar CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!exibirGridItens">
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label>Produto
+                    <span class="ask-obrigatorio">*</span>
+                </label>
+                <p-dropdown pTooltip="Produto" id="cbproduto" name="cbproduto" [options]="produtos" [(ngModel)]="produtoSelecionado" [style]="{'width':'100%'}"
+                    placeholder="Selecione..." #cbpcbprodutoerfil></p-dropdown>
+                <span id="cbproduto-error" class="error"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!exibirGridItens">
+        <div class="col-lg-12">
+            <hr>
+            <div class="form-group-btn">
+                <button type="button" (click)="btnSalvarDadosItens()" class="btn btn-primary btn float-right">Salvar</button>
+                <button type="button" (click)="btnVoltarItem()" class="btn btn-secondary btn btn-cancelar float-right">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Legenda -->
+<app-legenda *ngIf="exibirConsulta || exibirGridItens" [registroAtivo]="true"  [duploClick]="true" [registroExcluido]="false" [registroInativo]="true" [duploClick]="true"></app-legenda>
+
+<!-- Mensagem de sobreposição.-->
+<!-- Mensagem de confirmação -->
+<!-- Info carregando -->
+<app-componente-basico [msg]="msgs" [exibirCarregando]="exibirCarregando" [confirmDialog]="true">
+</app-componente-basico>

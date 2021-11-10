@@ -1,0 +1,140 @@
+<div class="row form-group-btn-adicionar">
+    <div class="col-lg-10">
+        <div class="tim-typo">
+            <span class="tim-note" style="font-size: 26px;font-family: Quicksand;">Cadastro de Cargos</span>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="tim-typo">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div class="form" [hidden]="!exibirConsulta">
+    <div class="row borda-filtro" >
+        <div class="col-lg-12 filtro" data-toggle="collapse" data-target="#filtroPesquisa" >
+            <div class="float-right">
+                <small class="filtro-pesquisa">Filtros para Pesquisa ↓
+                </small>
+            </div>
+        </div>
+        <div class="col-lg-12 collapse" id="filtroPesquisa">
+            <div class="row ">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        Nome
+                        <input type="text" class="form-control" [(ngModel)]="pesquisa.nomeFiltro" name="nomeFiltro" id="nomeFiltro">
+                        <span id="nomeProdutorFiltro-error" class="error"></span>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group-checkbox">
+                        <p-checkbox name="exibeInativosFiltro" [(ngModel)]="pesquisa.exibeInativosFiltro" value="Exibir Inativos" binary="true"></p-checkbox> Exibir desativados 
+                    </div>
+                </div>              
+            </div>
+            <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 btn-pesquisar">
+                <div class="form-group-btn">
+                    <hr>
+                    <button type="button" (click)="btnPesquisar()"  class="btn btn-primary btn float-right">Pesquisar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="col-lg-12">
+            <div class="row">
+                <p-table class="grid1" selectionMode="single" [value]="gridVo" [columns]="colunas" [responsive]="true"
+                    emptyMessage="Não existem registros!" [paginator]="true" [rows]="10"
+                    sortMode="multiple">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="align-text-center">
+                            <th *ngFor="let col of columns" pTooltip="{{col.header}}" tooltipPosition="top"> 
+                                {{col.header}}  
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                            <th style="width: 70px;" class="table-alterar">Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-gridVo let-columns="columns">
+                        <tr class="{{(gridVo.dataDesativacao == null ? '' : 'disabled-account-row')}}">
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.id}}</td>
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top">{{gridVo.nome}}</td>
+                            <td (dblclick)="btnAlterarDados(gridVo)" tooltipPosition="top"> {{gridVo.dataCadastro}}</td>            
+                            <td class="table-acao">
+                                <ul class="navbar-nav ul-action">
+                                    <li class="nav-item dropdown">
+                                        <div class="btn-action" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-action-first fa fa-ellipsis-v"></i>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="dropdown-item" (click)="btnAtivarRemoverDados(gridVo)">
+                                                <i class="icon-action fa fa-thumbs-{{(gridVo.dataDesativacao == null ? 'down' : 'up')}}"></i>{{(gridVo.dataDesativacao
+                                                == null ? 'Desativar' : 'Ativar')}}</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-gridVo let-columns="columns">
+                        <tr [attr.colspan]="gridVo">
+                            <td [colSpan]="4" class="table-empty">
+                                Não existem registros!
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <div class="form-group-btn">
+                    <button type="button" (click)="btnNovoDados()" class="btn btn-primary btn float-right">Novo</button>
+                    <button type="button" (click)="btnGridCSV()" class="btn btn-primary btn btn-cancelar float-left">Gerar CSV</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+<div class="form" [hidden]="!exibirEdicao">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label>Nome
+                    <span class="ask-obrigatorio">*</span>
+                </label>
+                <input pTooltip="Nome" maxlength="15" type="text" [(ngModel)]="model.nome" class="form-control" placeholder="Nome" name="nome" id="nomeUsuario" #nomeUsuario>
+                <span id="nome-error" class="error"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+            <div class="form-group-btn">
+                <button type="button" (click)="btnSalvarDados()" class="btn btn-primary btn float-right">Salvar</button>
+                <button type="button" (click)="btnVoltarTelaPrincipal()" class="btn btn-secondary btn btn-cancelar float-right">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Legenda -->
+<app-legenda *ngIf="exibirConsulta" [registroAtivo]="true"  [duploClick]="true" [registroExcluido]="false" [registroInativo]="true" [duploClick]="true"></app-legenda>
+
+<!-- Mensagem de sobreposição.-->
+<!-- Mensagem de confirmação -->
+<!-- Info carregando -->
+<app-componente-basico [msg]="msgs" [exibirCarregando]="exibirCarregando" [confirmDialog]="true">
+</app-componente-basico>

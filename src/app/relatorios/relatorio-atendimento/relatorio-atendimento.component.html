@@ -1,0 +1,71 @@
+<div class="row form-group-btn-adicionar">
+    <div class="col-lg-10">
+        <div class="tim-typo">
+            <span class="tim-note" style="font-size: 26px;font-family: Quicksand;">Relatórios Gráficos</span>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="tim-typo">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+<div style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
+    <canvas baseChart
+        [datasets]="dataProdutosVendidos"
+        [options]="options"
+        [labels]="labelsProdutosVendidos"
+        [type]="'bar'">
+    </canvas>
+</div>
+
+<div style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
+    <canvas baseChart
+        [datasets]="dataValoresProdutos"
+        [options]="options"
+        [labels]="labelsValoresProdutos"
+        [type]="'bar'">
+    </canvas>
+</div>
+</div>
+
+<div class="row ">
+    <div style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
+        <canvas baseChart
+            [datasets]="dataAtendimentosClientes"
+            [options]="options"
+            [labels]="labelsAtendimentosClientes"
+            [type]="'bar'">
+        </canvas>
+    </div>
+    
+    <div style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
+        <canvas baseChart
+            [datasets]="dataValoresClientes"
+            [options]="options"
+            [labels]="labelsValoresClientes"
+            [type]="'bar'">
+        </canvas>
+    </div>
+</div>
+
+<div class="row ">
+    <div style="width: 50%; height: 50%;">
+        <canvas baseChart
+            [datasets]="dataAtendimentosFuncionarios"
+            [options]="options"
+            [labels]="labelsAtendimentosFuncionarios"
+            [type]="'bar'">
+        </canvas>
+    </div>
+    <div style="width: 50%; height: 50%;">
+        <canvas baseChart
+            [datasets]="dataValoresFuncionarios"
+            [options]="options"
+            [labels]="labelsValoresFuncionarios"
+            [type]="'bar'">
+        </canvas>
+    </div>
+</div>

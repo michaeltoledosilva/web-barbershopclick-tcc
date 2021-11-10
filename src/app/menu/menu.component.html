@@ -1,0 +1,97 @@
+<div class="sidebar" data-color="cinza" data-background-color="white">
+
+  <div class="logo">
+    <div class="row">
+      <div class="center col-lg-12">
+          <img id="logo" class="center" src="./assets/img/menu.png" alt="Logo"/>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+
+      <li class="nav-item  active">
+        <a class="nav-link collapsed" data-toggle="collapse" href="#mapLancamento" aria-expanded="false">
+          <i class="material-icons"></i>
+          <p> Lançamentos
+            <b class="caret"></b>
+          </p>
+        </a>
+
+        <div class="collapse" id="mapLancamento">
+          <ul class="nav">
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaAgenda">
+              <a class="nav-link" href="#" [routerLink]="['/agenda']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Agendas </span>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaAtendimento">
+              <a class="nav-link" href="#" [routerLink]="['/atendimento']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Atendimentos </span>
+              </a>
+            </li>    
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" href="#" [routerLink]="['/relatorio-atendimento']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Relatório </span>
+              </a>
+            </li>  
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item  active">
+        <a class="nav-link collapsed" data-toggle="collapse" href="#mapCadastro" aria-expanded="false">
+          <i class="material-icons"></i>
+          <p> Cadastros
+            <b class="caret"></b>
+          </p>
+        </a>
+
+        <div class="collapse" id="mapCadastro">
+          <ul class="nav">
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaCargos">
+              <a class="nav-link" href="#" [routerLink]="['/cargo']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Cargos </span>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaClientes">
+              <a class="nav-link" href="#" [routerLink]="['/cliente']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Clientes </span>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaFuncionarios">
+              <a class="nav-link" href="#" [routerLink]="['/funcionario']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Funcionários </span>
+              </a>
+            </li>
+            <li class="nav-item " routerLinkActive="active" *ngIf="acessaPerfil">
+              <a class="nav-link" href="#" [routerLink]="['/perfil']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Perfis </span>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaProdutos">
+              <a class="nav-link" href="#" [routerLink]="['/produto']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Produtos </span>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="acessaUsuarios">
+              <a class="nav-link" href="#" [routerLink]="['/usuario']">
+                <span class="sidebar-mini"> </span>
+                <span class="sidebar-normal"> Usuários </span>
+              </a>
+            </li>       
+          </ul>
+        </div>
+      </li>
+            
+    </ul>
+  </div>
+</div>
