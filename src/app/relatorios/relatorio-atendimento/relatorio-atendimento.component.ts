@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ChartDataset, ChartOptions, registerables } from 'chart.js'
+import { Chart, ChartDataset, ChartOptions, registerables } from 'chart.js'
 import { UtilsService } from 'src/app/common/utils/utils.service';
 import { RelatorioAtendimentoService } from './relatorio-atendimento.service';
 
@@ -15,6 +15,7 @@ export class RelatorioAtendimentoComponent {
   constructor(public util: UtilsService, public service: RelatorioAtendimentoService) { }
 
   ngOnInit(){
+
     this.util.buscarUrl().subscribe(res => {
       this.carregarDadosRelatorioProdutosVendidos();      
       this.carregarDadosRelatorioValoresProdutos(); 
