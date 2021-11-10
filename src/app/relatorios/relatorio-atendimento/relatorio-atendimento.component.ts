@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ChartDataset, ChartOptions } from 'chart.js'
+import { ChartDataset, ChartOptions, registerables } from 'chart.js'
 import { UtilsService } from 'src/app/common/utils/utils.service';
 import { RelatorioAtendimentoService } from './relatorio-atendimento.service';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-relatorio-atendimento',
